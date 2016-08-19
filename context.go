@@ -1,5 +1,5 @@
 
-package dtree
+package detree
 
 
 // Context pass down to the sub modules.

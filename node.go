@@ -1,5 +1,5 @@
 
-package dtree
+package detree
 
 // A node represents file, has reference to
 // the dependencies and dependants

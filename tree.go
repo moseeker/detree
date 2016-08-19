@@ -1,5 +1,5 @@
 
-package dtree
+package detree
 
 // A tree manage all the nodes.
 type Tree struct {

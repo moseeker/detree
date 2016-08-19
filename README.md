@@ -1,4 +1,4 @@
-# dtree
+# detree
 
 WIP.
 

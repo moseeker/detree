@@ -1,5 +1,5 @@
 
-package dtree
+package detree
 
 import (
 	"log"
