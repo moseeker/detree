@@ -9,16 +9,15 @@ import (
 
 // Scanner interface.
 type Scanner interface {
-	Next() string 	// Get the next dep the file requires.
-	Init(io.Reader)          // Init the scanner with reader.
+	Scan() []string 	// Get the next dep the file requires.
 }
 
 type ScannerBase struct {
 	s *scanner.Scanner
 }
 
-func (s *ScannerBase) Next() string {
-	return ""
+func (s *ScannerBase) Scan() []string {
+	return nil
 }
 
 func (s *ScannerBase) Init(in io.Reader) {

@@ -13,11 +13,11 @@ type JsScanner struct{
 	ScannerBase
 }
 
-// Return the next dep
-func (s *JsScanner) Next() string {
+// Return the deps
+func (s *JsScanner) Scan() []string {
 	if !s.HasInit() {
 		panic("Please init the scanner first.")
 	}
 
-	return ""
+	return nil
 }

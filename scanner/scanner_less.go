@@ -13,11 +13,11 @@ type LessScanner struct{
 	ScannerBase
 }
 
-// Return the next dep
-func (s *LessScanner) Next() string {
+// Return the deps
+func (s *LessScanner) Scan() []string {
 	if !s.HasInit() {
 		panic("Please init the scanner first.")
 	}
 
-	return ""
+	return nil
 }

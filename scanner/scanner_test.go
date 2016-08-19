@@ -21,5 +21,5 @@ func TestScannerHasInit(t *testing.T) {
 
 	// If the scanner has not init,
 	// then call Next method will throw an error.
-	s.Next()
+	s.Scan()
 }
