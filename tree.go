@@ -6,11 +6,10 @@ type Tree struct {
 	list []*Node      // The nodes of the current tree.
 }
 
-// Create a new tree from a dir,
-// name is dir path.
-func NewTree(name string) *Tree {
+// Create a new tree.
+func NewTree() *Tree {
 	t := &Tree{
-		list: make([]*Node, 20),
+		list: make([]*Node, 0, 20),
 	}
 
 	return t
