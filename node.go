@@ -6,7 +6,7 @@ package dtree
 type Node struct {
 	name string       // The file full name
 	deps []string     // The dependencies of file name
-    refs []string     // The top most dependants
+	refs []string     // The top most dependants
 }
 
 // Create a new node.

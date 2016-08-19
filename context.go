@@ -7,7 +7,6 @@ type Context struct {
 	root string     // The root dependant of the file.
 }
 
-
 // Create a new Context.
 // name is the root path name.
 func NewContext(name string) *Context {
@@ -15,7 +14,6 @@ func NewContext(name string) *Context {
 		root: name,
 	}
 }
-
 
 // Get the root.
 func (c *Context) GetRoot() string {
