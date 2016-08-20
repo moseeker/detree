@@ -10,6 +10,8 @@ import (
 // Scanner interface.
 type Scanner interface {
 	Scan() []string 	// Get the next dep the file requires.
+	Init(io.Reader)     // Init the scanner
+	New() Scanner
 }
 
 type ScannerBase struct {
@@ -17,6 +19,10 @@ type ScannerBase struct {
 }
 
 func (s *ScannerBase) Scan() []string {
+	return nil
+}
+
+func (s *ScannerBase) New() Scanner {
 	return nil
 }
 
@@ -54,5 +60,5 @@ func GetScannerByName(name string) (Scanner, error) {
 		return nil, fmt.Errorf("No such scanner: %q\n", name)
 	}
 
-	return scanner, nil
+	return scanner.New(), nil
 }

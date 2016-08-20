@@ -21,3 +21,7 @@ func (s *JsScanner) Scan() []string {
 
 	return nil
 }
+
+func (s *JsScanner) New() Scanner {
+	return &JsScanner{ScannerBase{}}
+}

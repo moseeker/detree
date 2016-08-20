@@ -21,3 +21,8 @@ func (s *LessScanner) Scan() []string {
 
 	return nil
 }
+
+func (s *LessScanner) New() Scanner {
+	return &LessScanner{ScannerBase{}}
+}
+
