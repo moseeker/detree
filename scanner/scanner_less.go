@@ -16,7 +16,7 @@ type LessScanner struct{
 }
 
 // Return the deps
-func (s *LessScanner) Scan() []string {
+func (s *LessScanner) Scan() ([]string, error) {
 	if s.lexer == nil {
 		panic("Please init the scanner first.")
 	}
@@ -29,17 +29,15 @@ func (s *LessScanner) Scan() []string {
 		switch tok {
 		case css.ErrorToken:
 			if s.lexer.Err() != io.EOF {
-				fmt.Println("Error")
+				return nil, s.Err()
 			}
-			return
+			return deps, nil
 		case css.IdentToken:
 			fmt.Println("Ident", string(text))
 		case css.AtKeywordToken:
 			fmt.Println("AtKeyword", string(text))
 		}
 	}
-
-	return nil
 }
 
 // Create a new copy of the scanner.
@@ -56,4 +54,9 @@ func (s *LessScanner) Init(in io.Reader) {
 func (s *LessScanner) Next() (css.TokenType, []byte) {
 
 	return s.lexer.Next()
+}
+
+// Check err
+func (s *LessScanner) Err() error {
+	return s.lexer.Err()
 }

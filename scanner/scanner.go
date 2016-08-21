@@ -8,10 +8,10 @@ import (
 
 // Scanner interface.
 type Scanner interface {
-	Scan() []string 	 // Get the next dep the file requires.
-	Init(io.Reader)      // User must init the scanner with a reader.
+	Scan() ([]string,error)  // Get the next dep the file requires.
+	Init(io.Reader)          // User must init the scanner with a reader.
 	// Internal api.
-	New() Scanner        // Create a new scanner.
+	New() Scanner            // Create a new scanner.
 }
 
 // The supported scanners.

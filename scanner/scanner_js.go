@@ -16,12 +16,12 @@ type JsScanner struct{
 }
 
 // Return the deps
-func (s *JsScanner) Scan() []string {
+func (s *JsScanner) Scan() ([]string, error) {
 	if s.lexer == nil {
 		panic("Please init the scanner first.")
 	}
 
-	// deps := make([]string, 0, 10)
+	deps := make([]string, 0, 10)
 
 	for {
 		tok, text := s.Next()
@@ -29,15 +29,20 @@ func (s *JsScanner) Scan() []string {
 		switch tok {
 		case js.ErrorToken:
 			if s.Err() != io.EOF {
-				fmt.Println("Error")
+				return nil, s.Err()
 			}
-			return nil
+			return deps, nil
 		case js.IdentifierToken:
-			fmt.Println("Ident", string(text))
+			keyword := string(text)
+			if keyword == "require" || keyword == "import" {
+				dep, err := scanNextDep(keyword)
+				if err != nil {
+					break
+				}
+				append(deps, dep)
+			}
 		}
 	}
-
-	return nil
 }
 
 // Create a new copy of the scanner.
@@ -59,4 +64,9 @@ func (s *JsScanner) Next() (js.TokenType, []byte) {
 // Check err
 func (s *JsScanner) Err() error {
 	return s.lexer.Err()
+}
+
+// Scan the dependency
+func (s *JsScanner) scanNextDep(keyword) (string, error) {
+	// not implemented
 }
