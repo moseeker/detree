@@ -4,37 +4,14 @@ package scanner
 import (
 	"io"
 	"fmt"
-	"text/scanner"
 )
 
 // Scanner interface.
 type Scanner interface {
-	Scan() []string 	// Get the next dep the file requires.
-	Init(io.Reader)     // Init the scanner
-	New() Scanner
-}
-
-type ScannerBase struct {
-	s *scanner.Scanner
-}
-
-func (s *ScannerBase) Scan() []string {
-	return nil
-}
-
-func (s *ScannerBase) New() Scanner {
-	return nil
-}
-
-func (s *ScannerBase) Init(in io.Reader) {
-	s.s = new(scanner.Scanner).Init(in)
-}
-
-func (s *ScannerBase) HasInit() bool {
-	if s.s == nil {
-		return false
-	}
-	return true
+	Scan() []string 	 // Get the next dep the file requires.
+	Init(io.Reader)      // User must init the scanner with a reader.
+	// Internal api.
+	New() Scanner        // Create a new scanner.
 }
 
 // The supported scanners.
