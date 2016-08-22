@@ -3,8 +3,9 @@ package scanner
 
 import (
 	"io"
-	"fmt"
+	"errors"
 	"github.com/tdewolff/parse/js"
+	"github.com/towry/detree"
 )
 
 func init() {
@@ -35,11 +36,11 @@ func (s *JsScanner) Scan() ([]string, error) {
 		case js.IdentifierToken:
 			keyword := string(text)
 			if keyword == "require" || keyword == "import" {
-				dep, err := scanNextDep(keyword)
+				dep, err := s.scanNextDep()
 				if err != nil {
 					break
 				}
-				append(deps, dep)
+				deps = append(deps, dep)
 			}
 		}
 	}
@@ -67,6 +68,21 @@ func (s *JsScanner) Err() error {
 }
 
 // Scan the dependency
-func (s *JsScanner) scanNextDep(keyword) (string, error) {
-	// not implemented
+func (s *JsScanner) scanNextDep() (string, error) {
+	// expect string
+
+	for {
+		tok, text := s.Next()
+
+		switch tok {
+		case js.LineTerminatorToken:
+		case js.ErrorToken:
+			return "", errors.New("unexpected token")
+		case js.StringToken:
+			return detree.RemoveQuotes(string(text)), nil
+		}
+	}
+
+	return "", errors.New("unexpected token")
 }
+

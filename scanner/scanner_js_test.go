@@ -4,6 +4,7 @@ package scanner
 import "os"
 import "testing"
 
+
 func TestScannerJs(t *testing.T) {
 	reader, err := os.Open("../__test__/a.js")
 	if err != nil {
@@ -14,9 +15,9 @@ func TestScannerJs(t *testing.T) {
 	jss, _ := GetScannerByName("js")
 	jss.Init(reader)
 
-	list := jss.Scan()
+	list, _ := jss.Scan()
 
-	if list != nil {
+	if list == nil {
 		t.Fatal()
 	}
 }

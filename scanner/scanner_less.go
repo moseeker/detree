@@ -21,7 +21,7 @@ func (s *LessScanner) Scan() ([]string, error) {
 		panic("Please init the scanner first.")
 	}
 
-	// deps := make([]string, 0, 10)
+	deps := make([]string, 0, 10)
 
 	for {
 		tok, text := s.Next()
@@ -37,6 +37,8 @@ func (s *LessScanner) Scan() ([]string, error) {
 		case css.AtKeywordToken:
 			fmt.Println("AtKeyword", string(text))
 		}
+
+		deps = append(deps, string(text))
 	}
 }
 
