@@ -4,6 +4,7 @@ package detree
 import (
 	"os"
 	"log"
+	"time"
 	"path"
 	"io/ioutil"
 	"github.com/towry/detree/scanner"
@@ -45,7 +46,6 @@ func Build(files []string, config *Config) *Tree {
 
 		// init the scanner.
 		scanner.Init(reader)
-
 		list, errScan := scanner.Scan()
 		if errScan != nil {
 			log.Fatal(errScan)
@@ -59,6 +59,8 @@ func Build(files []string, config *Config) *Tree {
 		// close the file
 		reader.Close()
 	}
+
+	time.Sleep(time.Millisecond)
 
 	return tree
 }
@@ -77,7 +79,6 @@ func getScannerFromPath(name string) string {
 // Build dependency for file
 func BuildFile(list []string, ctx *Context) {
 	// tree := ctx.GetTree()
-	log.Println("build file", ctx.GetRoot())
 }
 
 func addFileToTree(name string, tree *Tree) {
