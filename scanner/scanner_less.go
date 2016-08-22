@@ -3,8 +3,9 @@ package scanner
 
 import (
 	"io"
-	"fmt"
+	"errors"
 	"github.com/tdewolff/parse/css"
+	"github.com/towry/detree"
 )
 
 func init() {
@@ -32,13 +33,16 @@ func (s *LessScanner) Scan() ([]string, error) {
 				return nil, s.Err()
 			}
 			return deps, nil
-		case css.IdentToken:
-			fmt.Println("Ident", string(text))
 		case css.AtKeywordToken:
-			fmt.Println("AtKeyword", string(text))
+			keyword := string(text)
+			if keyword == "@import" {
+				dep, err := s.scanNextDep()
+				if err != nil {
+					break
+				}
+				deps = append(deps, dep)
+			}
 		}
-
-		deps = append(deps, string(text))
 	}
 }
 
@@ -61,4 +65,24 @@ func (s *LessScanner) Next() (css.TokenType, []byte) {
 // Check err
 func (s *LessScanner) Err() error {
 	return s.lexer.Err()
+}
+
+// Scan the next dependency
+func (s *LessScanner) scanNextDep() (string, error) {
+	// expect string
+
+	for {
+		tok, text := s.Next()
+
+		switch tok {
+		case css.SemicolonToken:
+		case css.ErrorToken:
+		case css.BadStringToken:
+			return "", errors.New("unexpected token")
+		case css.StringToken:
+			return detree.RemoveQuotes(string(text)), nil
+		}
+	}
+
+	return "", errors.New("unexpected token")
 }
