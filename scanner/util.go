@@ -1,5 +1,5 @@
 
-package detree
+package scanner
 
 import "strings"
 

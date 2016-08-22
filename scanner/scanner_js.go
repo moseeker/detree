@@ -5,7 +5,6 @@ import (
 	"io"
 	"errors"
 	"github.com/tdewolff/parse/js"
-	"github.com/towry/detree"
 )
 
 func init() {
@@ -79,7 +78,7 @@ func (s *JsScanner) scanNextDep() (string, error) {
 		case js.ErrorToken:
 			return "", errors.New("unexpected token")
 		case js.StringToken:
-			return detree.RemoveQuotes(string(text)), nil
+			return RemoveQuotes(string(text)), nil
 		}
 	}
 

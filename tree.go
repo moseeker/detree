@@ -1,8 +1,13 @@
 
 package detree
 
+import (
+	"sync"
+)
+
 // A tree manage all the nodes.
 type Tree struct {
+	lock *sync.Mutex
 	list []*Node      // The nodes of the current tree.
 }
 
@@ -16,6 +21,12 @@ func NewTree() *Tree {
 }
 
 // Add a node to the tree.
+// TODO: Check duplicate.
 func (t *Tree) AddNode(node *Node) {
 	t.list = append(t.list, node)
+}
+
+// Json output
+func (t *Tree) JsonString() string {
+	return ""
 }

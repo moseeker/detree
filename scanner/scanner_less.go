@@ -5,7 +5,6 @@ import (
 	"io"
 	"errors"
 	"github.com/tdewolff/parse/css"
-	"github.com/towry/detree"
 )
 
 func init() {
@@ -80,7 +79,7 @@ func (s *LessScanner) scanNextDep() (string, error) {
 		case css.BadStringToken:
 			return "", errors.New("unexpected token")
 		case css.StringToken:
-			return detree.RemoveQuotes(string(text)), nil
+			return RemoveQuotes(string(text)), nil
 		}
 	}
 

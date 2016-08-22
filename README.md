@@ -1,7 +1,5 @@
 # detree
 
-WIP.
-
 Build the dependency tree for javascript and sass/less files.
 
 ## How it works
