@@ -31,9 +31,25 @@ func (t *Tree) AddNode(node *Node) {
 
 // Json output
 func (t *Tree) JsonString() string {
-	output := ""
+	list := make([]string, 0, 10)
 
 	for _, node := range t.list {
-		output += ("node: " + node.name + "\n")
+		list = append(list, node.name)
 	}
+
+	output, _ := json.Marshal(list)
+	return string(output)
+}
+
+// quick search
+func (t *Tree) SearchNode(name string) *Node{
+	list := t.list
+
+	for _, item := range list {
+		if item.GetName() == name {
+			return item
+		}
+	}
+
+	return nil
 }

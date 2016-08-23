@@ -3,10 +3,12 @@ package detree
 
 import (
 	"os"
+	"fmt"
 	"log"
 	"time"
 	"path"
 	"io/ioutil"
+	"path/filepath"
 	"github.com/towry/detree/scanner"
 )
 
@@ -19,7 +21,13 @@ func ScanDir(name string) []string {
 	}
 
 	for _, file := range files {
-		list = append(list, path.Join(name, file.Name()))
+		filename := path.Join(name, file.Name())
+		filename, err = filepath.Abs(filename)
+		if err != nil {
+			continue
+		}
+
+		list = append(list, filename)
 	}
 
 	return list
@@ -54,7 +62,8 @@ func Build(files []string, config *Config) *Tree {
 		addFileToTree(file, tree)
 
 		ctx := NewContext(file, tree)
-		go BuildFile(list, ctx)
+		
+		go BuildEachFile(list, ctx)
 
 		// close the file
 		reader.Close()
@@ -76,13 +85,24 @@ func getScannerFromPath(name string) string {
 	return ext[1:]
 }
 
-// Build dependency for file
-func BuildFile(list []string, ctx *Context) {
+// Build dependency for each file
+// list is the dependencies.
+func BuildEachFile(list []string, ctx *Context) {
 	// tree := ctx.GetTree()
+
+	for _, file := range list {
+		fmt.Println(file)
+	}
 }
 
 func addFileToTree(name string, tree *Tree) {
 	tree.lock.Lock()
+	found := tree.SearchNode(name)
+	// if added, return
+	if found != nil {
+		return
+	}
+
 	node := NewNode(name)
 	tree.AddNode(node)
 	tree.lock.Unlock()

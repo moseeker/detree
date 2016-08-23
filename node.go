@@ -21,6 +21,11 @@ func NewNode(name string) *Node {
 	return n
 }
 
+// Getter for name
+func (n *Node) GetName() string {
+	return n.name
+}
+
 // Add a dep to this node.
 // !Is this operation of append item to slice
 // efficient.
